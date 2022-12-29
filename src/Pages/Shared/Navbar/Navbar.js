@@ -1,8 +1,24 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../../contexts/AuthProvider';
 import Button from './Button';
 
 const Navbar = () => {
+
+    const { user, logOut } = useContext(AuthContext);
+    // const handleLogOut = () => {
+    //     logOut()
+    //         .then(() => { })
+    //         .catch(err => console.log(err));
+    // }
+    function handleLogOut() {
+        console.log("Button clicked")
+        logOut()
+            .then(() => {})
+            .catch(err => console.log(err));
+    }
+
+
 
     let Links =[
         {name:"ADD TASK",link:"/"},
@@ -14,7 +30,7 @@ const Navbar = () => {
 
     return (
         <>
-             <div className=' w-full fixed top-0 left-0'>
+            <div className=' w-full fixed top-0 left-0'>
                 <div className='md:flex items-center justify-between bg-white py-4 md:px-10 px-7'>
                     <div className='font-bold text-2xl cursor-pointer flex items-center font-[Poppins] 
                     text-gray-800'>
@@ -37,7 +53,12 @@ const Navbar = () => {
                             </li>
                         ))
                         }
-                        <Link to="/login"><Button>LOGIN</Button></Link> 
+                        {user?.uid ?
+                            <>
+                                <li><button className='mx-4 btn btn-ghost text-black border-none  rounded' onClick={handleLogOut}>Sign out</button></li>
+                            </>
+                            : <li><Link className='mx-4 btn btn-ghost text-black border-none rounded' to="/login">Login</Link></li>
+                        }
                     </ul>
                 </div>
             </div>

@@ -44,13 +44,13 @@ const TaskCard = ({ task, refetch }) => {
 
     return (
         <div>
-            <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                <img class="w-full" src={image} alt="Sunset in the mountains" />
-                <div class="px-6 py-4">
-                    <div class="font-bold text-xl mb-2">{name}</div>
-                    <p class="text-gray-700 text-base">{TaskDetails}</p>
+            <div className="max-w-sm rounded overflow-hidden shadow-lg">
+                <img className="w-full" src={image} alt="Sunset in the mountains" />
+                <div className="px-6 py-4">
+                    <div className="font-bold text-xl mb-2">{name}</div>
+                    <p className="text-gray-700 text-base">{TaskDetails}</p>
                 </div>
-                <div class="px-6 py-4 grid gap-2 grid-flow-col">
+                <div className="px-6 py-4 grid gap-2 grid-flow-col">
                     <button className="bg-indigo-600 hover:bg-indigo-400 mt-2 text-white font-bold py-2 px-2 rounded">
                         UPDATE
                     </button>
