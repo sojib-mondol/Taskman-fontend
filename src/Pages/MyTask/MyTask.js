@@ -1,22 +1,24 @@
 import { useQuery } from "@tanstack/react-query";
 import { data } from "autoprefixer";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import Loading from "../../components/Loading";
+import { AuthContext } from "../../contexts/AuthProvider";
 import ConfirmationModal from "./ConfirmationModal";
 import TaskCard from "./TaskCard";
 
 const MyTask = () => {
     const navigate = useNavigate();
-
+    const { user } = useContext(AuthContext);
     const {
         data: tasks = [],
         refetch,
         isLoading,
     } = useQuery({
-        queryKey: ["tasks"],
+        queryKey: ["tasks", user?.email],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5000/tasks");
+            const res = await fetch(`https://task-man-server-rho.vercel.app/tasks/${user?.email}`);
             const data = await res.json();
             return data;
         },
@@ -24,9 +26,9 @@ const MyTask = () => {
 
     //console.log("deddedeede", deleting);
 
-    // if (isLoading) {
-    //     return <Loading></Loading>
-    // }
+    if (isLoading) {
+        return <Loading></Loading>
+    }
 
     return (
         <div className="mt-28 mx-10">

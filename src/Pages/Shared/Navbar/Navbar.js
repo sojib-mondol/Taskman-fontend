@@ -6,13 +6,8 @@ import Button from './Button';
 const Navbar = () => {
 
     const { user, logOut } = useContext(AuthContext);
-    // const handleLogOut = () => {
-    //     logOut()
-    //         .then(() => { })
-    //         .catch(err => console.log(err));
-    // }
     function handleLogOut() {
-        console.log("Button clicked")
+        //console.log("Button clicked")
         logOut()
             .then(() => {})
             .catch(err => console.log(err));
@@ -35,12 +30,12 @@ const Navbar = () => {
                     <div className='font-bold text-2xl cursor-pointer flex items-center font-[Poppins] 
                     text-gray-800'>
                         <span className='text-3xl text-indigo-600 mr-1 pt-2'>
-                        <ion-icon name="logo-ionic"></ion-icon>
+                            <ion-icon name="logo-ionic"></ion-icon>
                         </span>
                         Task Man
                     </div>
                     
-                    <div onClick={()=>setOpen(!open)} className='text-3xl absolute right-8 top-6 cursor-pointer md:hidden'>
+                    <div onClick={()=>setOpen(!open)} className='text-3xl absolute right-8 top-6 cursor-pointer  md:hidden'>
                         <ion-icon name={open ? 'close':'menu'}></ion-icon>
                     </div>
 

@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthProvider';
 
 const AddTask = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const imageHostKey = process.env.REACT_APP_imgbb_key;
+    const { user } = useContext(AuthContext);
     
     const navigate = useNavigate();
 
@@ -23,20 +25,21 @@ const AddTask = () => {
         .then(imgData => {
             if(imgData.success){
                 console.log(imgData.data.url);
-                const doctor = {
+                const task_data = {
                     name: data.name, 
                     TaskDetails: data.text,
-                    image: imgData.data.url
+                    image: imgData.data.url,
+                    user_email: user?.email
                 }
 
-                // save doctor information to the database
-                fetch('http://localhost:5000/tasks', {
+                // save task_data information to the database
+                fetch('https://task-man-server-rho.vercel.app/tasks', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json', 
                         authorization: `bearer ${localStorage.getItem('accessToken')}`
                     },
-                    body: JSON.stringify(doctor)
+                    body: JSON.stringify(task_data)
                 })
                 .then(res => res.json())
                 .then(result =>{

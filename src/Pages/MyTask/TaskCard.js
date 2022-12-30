@@ -10,7 +10,7 @@ const TaskCard = ({ task, refetch }) => {
 
     // for delete
     const deleteTask = () => {
-        fetch(`http://localhost:5000/tasks/${task._id}`, {
+        fetch(`https://task-man-server-rho.vercel.app/tasks/${task._id}`, {
             method: "DELETE",
             headers: {
                 //authorization: `bearer ${localStorage.getItem('accessToken')}`
