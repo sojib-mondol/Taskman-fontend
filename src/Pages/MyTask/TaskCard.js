@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
+import { useNavigate } from "react-router-dom";
 
 const TaskCard = ({ task, refetch }) => {
     const { name, TaskDetails, _id, image } = task;
+    const navigate = useNavigate();
 
     const [deleting, setDeleting] = useState(false);
 
@@ -26,7 +28,7 @@ const TaskCard = ({ task, refetch }) => {
     };
 
     function handleDelete() {
-        console.log("hello");
+       // console.log("hello");
         confirmAlert({
             title: "Confirm to submit",
             message: "Are you sure to do this.",
@@ -40,6 +42,24 @@ const TaskCard = ({ task, refetch }) => {
                 },
             ],
         });
+    }
+
+    //console.log("task", task);
+
+    function handleCompleate(id) {
+        console.log(id);
+        fetch(`http://localhost:5000/tasks/${id}`, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({ completed: true })
+        })
+            .then(res => res.json())
+            .then(data => {
+                navigate('/complitedtasks')
+                toast.success('Completed')
+            })
     }
 
     return (
@@ -59,7 +79,7 @@ const TaskCard = ({ task, refetch }) => {
                         className="bg-indigo-600 hover:bg-indigo-400 mt-2 text-white font-bold py-2 px-2 rounded">
                         DELETE
                     </button>
-                    <button className="bg-indigo-600 hover:bg-indigo-400 mt-2 text-white font-bold py-2 px-2 rounded">
+                    <button onClick={() => handleCompleate(_id)} className="bg-indigo-600 hover:bg-indigo-400 mt-2 text-white font-bold py-2 px-2 rounded">
                         COMPLETE
                     </button>
                 </div>
